@@ -6,13 +6,17 @@ export const typeDefs = gql`
         hello: String!
     }
 
+    type Mutation {
+        createCat(name: String!): Cat!,
+        login(username: String!, password: String!): Authentication!
+    }
+
     type Cat {
         id: ID!,
         name: String!
     }
 
-    type Mutation {
-        createCat(name: String!): Cat!
+    type Authentication {
+        token: String!
     }
 `; 
-// String! means a string that cannot be null
