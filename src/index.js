@@ -10,8 +10,14 @@ import { resolvers } from "./resolvers";
 const context = async ({ req }) => {
     const [, token] = (req.headers.authorization || '').split("Bearer ");
 
+    // try to retrieve a user with the token
+    const user = await getUser(await getUserIdFromToken(token));
+
+    // console.log("user");
+    // console.log(user);
+
     return {
-        user: await getUser(await getUserIdFromToken(token)),
+        user,
     };
 };
 

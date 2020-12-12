@@ -15,7 +15,7 @@ const basicAuth = Buffer.from(
 
 const getToken = async ({ username, password }) => {
     //${process.env.OKTA_TOKEN}
-    const response = await fetch(`${process.env.OKTA_ORG_URL}/oauth2/v1/token`, {
+    const response = await fetch(`${process.env.OKTA_ORG_URL}/oauth2/${process.env.OKTA_AUTH_SERVER_ID}/v1/token`, {
         method: 'POST',
         headers: {
             authorization: `Basic ${basicAuth}`,
@@ -39,7 +39,7 @@ const getToken = async ({ username, password }) => {
 };
 
 const verifier = new JWTVerifier({
-    issuer: `${process.env.OKTA_ORG_URL}/oauth2/default`,
+    issuer: `${process.env.OKTA_ORG_URL}/oauth2/${process.env.OKTA_AUTH_SERVER_ID}`,
     clientId: process.env.OKTA_CLIENT_ID,
 });
 
