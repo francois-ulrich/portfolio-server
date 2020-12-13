@@ -7,14 +7,14 @@ import mongoose from "mongoose";
 import { typeDefs } from "./typeDefs";
 import { resolvers } from "./resolvers";
 
+// Get env variables
+require('dotenv').config({ path: '.env.local' });
+
 const context = async ({ req }) => {
     const [, token] = (req.headers.authorization || '').split("Bearer ");
 
     // try to retrieve a user with the token
     const user = await getUser(await getUserIdFromToken(token));
-
-    // console.log("user");
-    // console.log(user);
 
     return {
         user,
@@ -28,13 +28,17 @@ const startServer = async () => {
 
     // The ApolloServer constructor requires two parameters: your schema
     // definition and your set of resolvers.
-    const server = new ApolloServer({ typeDefs, resolvers, context });
+    const server = new ApolloServer({ 
+        typeDefs, 
+        resolvers, 
+        context 
+    });
 
     // Add GraphQL support to our express express
     server.applyMiddleware({ app });
 
     // Connect to our MongoDB database
-    await mongoose.connect('mongodb://localhost:27017/test', {
+    await mongoose.connect(`mongodb://localhost:27017/${process.env.MONGODB_DB_NAME}`, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

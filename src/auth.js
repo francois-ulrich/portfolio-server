@@ -3,7 +3,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const JWTVerifier = require('@okta/jwt-verifier');
 const okta = require('@okta/okta-sdk-nodejs');
 
-// Env variables
+// Get env variables
 require('dotenv').config({ path: '.env.local' });
 
 const basicAuth = Buffer.from(
